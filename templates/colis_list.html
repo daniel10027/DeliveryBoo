@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+    <!-- Datatable Dependency start -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/r-2.2.3/datatables.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-html5-1.6.1/b-print-1.6.1/r-2.2.3/datatables.min.js"></script>
+
+    <!-- Datatable Dependency end -->
+
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+
+        <div class="col-md-12">
+            <br>
+            <br>
+
+            <div class="card">
+<br>
+                <div class="row">
+                    <br>
+                    <div class="col">
+                        <a href="{% url 'colis_create' %}" class="btn btn-lg  btn-primary">Nouveau Colis</a>
+              
+                    </div>
+
+                    <div class="col">
+                        <a href="{% url 'colis_list' %}" class="btn btn-lg  btn-primary">Liste des  Colis</a>
+              
+                    </div>
+                    <div class="col">
+                        <a href="{% url 'recherche_colis' %}" class="btn btn-lg  btn-info">Suivi  Colis</a>
+                    </div>
+                </div>
+<br>
+                <div class="card-header">
+                    <h2>Suivi des Colis</h2>
+                   
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered table-hover" id="table_id">
+                        <thead>
+                            <tr>
+                                <th data-priority="1">Code Colis</th>
+                                <th>Titre</th>
+                                <th>Description</th>
+                                <th>Pays d'origine</th>
+                                <th>Destination</th>
+                                <th>Client</th>
+                                <th>Contact</th>
+                                <th>Etat</th>
+                                <th>Date de création</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for colis in colis_list %}
+                            <tr>
+                                <td>{{colis.code | upper }}</td>
+                                <td>{{colis.titre | upper }}</td>
+                                <td>{{colis.description | safe }}</td>
+                                <td>{{colis.source | upper }}</td>
+                                <td>{{colis.destination | upper }}</td>
+                                <td>{{colis.proprietaire | upper }}</td>
+                                <td>{{colis.contact | upper }}</td>
+                                <td>{{colis.etat  | upper }}</td>
+                                <td>{{colis.created }}</td>
+                                <td>
+                                    <a href="{% url 'colis_update' pk=colis.pk %}" class="btn btn-lg  btn-primary">Mise à jour</a>
+                                </td>
+                              
+                            </tr>
+                            {% endfor %}
+
+                          
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#table_id').DataTable({
+
+                dom: 'Bfrtip',
+                responsive: true,
+                pageLength: 25,
+                // lengthMenu: [0, 5, 10, 20, 50, 100, 200, 500],
+
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+
+            });
+        });
+    </script>
+
+</body>
+</html>
